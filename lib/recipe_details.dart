@@ -23,10 +23,15 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
       value:
           SystemUiOverlayStyle(statusBarColor: recipeList[widget.index].color),
       child: Scaffold(
-          body: SafeArea(
-              child: Column(
-        children: [RecipeCard(index: widget.index)],
-      ))),
+        body: SafeArea(
+          child: Column(
+            children: [
+              RecipeCard(index: widget.index),
+              Ingredients(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -81,7 +86,8 @@ class RecipeCard extends StatelessWidget {
                         padding: const EdgeInsets.all(5.0),
                         child: Row(
                           children: [
-                            Icon(Icons.access_time_filled, color: Colors.white70),
+                            Icon(Icons.access_time_filled,
+                                color: Colors.white70),
                             SizedBox(
                               width: 8,
                             ),
@@ -153,7 +159,8 @@ class RecipeCard extends StatelessWidget {
                               direction: Axis.horizontal,
                               allowHalfRating: true,
                               itemCount: 5,
-                              itemPadding: EdgeInsets.symmetric(horizontal: 0.0),
+                              itemPadding:
+                                  EdgeInsets.symmetric(horizontal: 0.0),
                               itemBuilder: (context, _) => Icon(
                                 Icons.star,
                                 color: Colors.white70,
@@ -183,10 +190,10 @@ class RecipeCard extends StatelessWidget {
                   child: ClipOval(
                     child: Image.network(
                       recipeList[index].imageUrl,
-                      width: 275,
-                      height: 200,
+                      width: index == 0 ? 275 : 270,
+                      height: 300,
                       fit: BoxFit.none,
-                      scale: 3.5,
+                      scale: index == 0 ? 3.5 : 2.06,
                     ),
                   ),
                 ),
@@ -211,7 +218,7 @@ class CustomAppBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-                onPressed: () {},
+                onPressed: () { Navigator.pop(context);},
                 icon: Icon(Icons.arrow_back_ios,
                     color: Colors.white70, size: 35)),
             IconButton(
@@ -224,6 +231,97 @@ class CustomAppBar extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class Ingredients extends StatelessWidget {
+  const Ingredients({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.topLeft,
+      child: Padding(
+        padding: const EdgeInsets.all(28.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Ingredients",
+              style: TextStyle(
+                  color: Color.fromRGBO(63, 102, 123, 1),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28),
+            ),
+            SizedBox(height: 16,),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      IngredientsText(text: "Bowtie pasta"),
+                      IngredientsText(text: "Salt"),
+                      IngredientsText(text: "1/4 cup olive oil"),
+                      IngredientsText(
+                          text:
+                              "Fresh veggies: red onion, carrot, broccoli, bell pepper, yellow squash, zucchini, tomatoes and garlic"),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 5,),
+                Expanded(
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      IngredientsText(text: "2 tsp dried italian seasoning"),
+                      IngredientsText(text: "2 Tbsp fresh lemon juice"),
+                      IngredientsText(text: "2 Tbsp chopped frsh parsley"),
+                      IngredientsText(
+                          text:
+                          "1/4 cup shredded parmigiano divided"),
+                    ],
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class IngredientsText extends StatelessWidget {
+  const IngredientsText({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "\u2022",
+          style: TextStyle(
+              color: Color(0xFFC9B63D),
+              fontWeight: FontWeight.bold,
+              fontSize: 28),
+        ),
+        SizedBox(width: 5),
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(top:8.0),
+            child: Text(
+              text,
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+          ),
+        )
+      ],
     );
   }
 }
