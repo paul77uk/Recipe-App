@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       MaterialPageRoute(
                                           builder: (_) =>
                                               RecipeDetailPage(
-                                                  index: index,
+                                                  recipe: recipeList[index],
                                               )
                                       )),
                             );

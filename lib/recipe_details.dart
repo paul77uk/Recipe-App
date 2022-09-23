@@ -7,10 +7,10 @@ import 'models/Recipe.dart';
 class RecipeDetailPage extends StatefulWidget {
   const RecipeDetailPage({
     Key? key,
-    required this.index,
+     required this.recipe,
   }) : super(key: key);
 
-  final int index;
+  final Recipe recipe;
 
   @override
   State<RecipeDetailPage> createState() => _RecipeDetailPageState();
@@ -21,15 +21,15 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value:
-          SystemUiOverlayStyle(statusBarColor: recipeList[widget.index].color),
+          SystemUiOverlayStyle(statusBarColor: widget.recipe.color),
       child: Scaffold(
         body: SafeArea(
           child: Column(
             children: [
-              CustomAppBar(index: widget.index),
+              CustomAppBar(recipe: widget.recipe),
               Expanded(
                 child: ListView(
-                  children: [ RecipeCard(index: widget.index),
+                  children: [ RecipeCard(recipe: widget.recipe),
                     Ingredients(),],
                 ),
               )
@@ -45,17 +45,17 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
 class RecipeCard extends StatelessWidget {
   const RecipeCard({
     Key? key,
-    required this.index,
+    required this.recipe,
   }) : super(key: key);
 
-  final int index;
+  final Recipe recipe;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 400,
       decoration: BoxDecoration(
-          color: recipeList[index].color,
+          color: recipe.color,
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(50),
               bottomRight: Radius.circular(50))),
@@ -71,7 +71,7 @@ class RecipeCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${recipeList[index].title.split(" ").first}\n${recipeList[index].title.split(" ").last}",
+                        "${recipe.title.split(" ").first}\n${recipe.title.split(" ").last}",
                         style: TextStyle(
                             fontSize: 32,
                             color: Colors.white70,
@@ -97,7 +97,7 @@ class RecipeCard extends StatelessWidget {
                               width: 8,
                             ),
                             Text(
-                              "${recipeList[index].time} min",
+                              "${recipe.time} min",
                               style: TextStyle(
                                   color: Colors.white70,
                                   fontWeight: FontWeight.bold,
@@ -118,7 +118,7 @@ class RecipeCard extends StatelessWidget {
                               width: 8,
                             ),
                             Text(
-                              "${recipeList[index].servings} servings",
+                              "${recipe.servings} servings",
                               style: TextStyle(
                                   color: Colors.white70,
                                   fontWeight: FontWeight.bold,
@@ -178,7 +178,7 @@ class RecipeCard extends StatelessWidget {
                               width: 4,
                             ),
                             Text(
-                              "${recipeList[index].reviews} reviews",
+                              "${recipe.reviews} reviews",
                               style: TextStyle(
                                   color: Colors.white70,
                                   fontWeight: FontWeight.bold,
@@ -194,11 +194,11 @@ class RecipeCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 10.0, bottom: 70),
                   child: ClipOval(
                     child: Image.network(
-                      recipeList[index].imageUrl,
+                      recipe.imageUrl,
                       width: 315,
                       height: 300,
                       fit: BoxFit.none,
-                      scale: index == 0 ? 3 : 1.78,
+                      scale: recipe.title == "Pasta Primavera" ? 3 : 1.78,
                     ),
                   ),
                 ),
@@ -212,14 +212,14 @@ class RecipeCard extends StatelessWidget {
 }
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({Key? key, required this.index}) : super(key: key);
+  const CustomAppBar({Key? key, required this.recipe}) : super(key: key);
 
-  final int index;
+  final Recipe recipe;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: recipeList[index].color,
+      color: recipe.color,
       child: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Row(
