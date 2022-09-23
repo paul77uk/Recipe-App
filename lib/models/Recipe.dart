@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Recipe {
   String imageUrl;
-  String? title;
+  String title;
   int time;
   int? servings;
   double? rating;
@@ -11,7 +11,7 @@ class Recipe {
   double scale;
 
   Recipe({
-    this.title,
+    required this.title,
     required this.time,
     this.servings,
     this.rating,

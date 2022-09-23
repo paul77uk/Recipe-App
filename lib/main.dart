@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:recipe_app/models/Recipe.dart';
 import 'package:recipe_app/recipe_details.dart';
@@ -29,173 +30,176 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(47, 90, 112, 1.0),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SafeArea(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Icon(
-                    Icons.menu,
-                    color: Colors.grey,
-                    size: 35,
-                  ),
-                  Icon(
-                    Icons.notification_add_outlined,
-                    color: Colors.grey,
-                    size: 35,
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 18,
-            ),
-            Expanded(
-              child: ListView(
-                children: [
-                  Text(
-                    "Hi, Connor",
-                    style: TextStyle(color: Colors.grey, fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "What do you want to cook today?",
-                    style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 16),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(10),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+          statusBarColor: Color.fromRGBO(47, 90, 112, 1.0),
+      ),
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(47, 90, 112, 1.0),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SafeArea(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(
+                      Icons.menu,
+                      color: Colors.grey,
+                      size: 35,
                     ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(color: Colors.grey[400]),
-                        icon: Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
-                          child: Icon(Icons.search, color: Colors.grey[400]),
+                    Icon(
+                      Icons.notification_add_outlined,
+                      color: Colors.grey,
+                      size: 35,
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 18,
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    Text(
+                      "Hi, Connor",
+                      style: TextStyle(color: Colors.grey, fontSize: 18),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "What do you want to cook today?",
+                      style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 16),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintStyle: TextStyle(color: Colors.grey[400]),
+                          icon: Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: Icon(Icons.search, color: Colors.grey[400]),
+                          ),
+                          hintText: "Search recipes",
                         ),
-                        hintText: "Search recipes",
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Text(
-                    "Most Popular Recipes",
-                    style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Container(
-                    height: 350,
-                    child: ListView.builder(
-                        itemCount: recipeList.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return RecipeCard(
-                            color: recipeList[index].color,
-                            imageUrl: recipeList[index].imageUrl.toString(),
-                            scale: recipeList[index].scale,
-                            time: recipeList[index].time,
-                            reviews: recipeList[index].reviews,
-                            recipeTitle: recipeList[index].title.toString(),
-                            onTap: () =>
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) =>
-                                            RecipeDetailPage(
-                                                title: recipeList[index].title.toString(),
-                                              color: recipeList[index].color,
-                                              imageUrl: recipeList[index].imageUrl,
-                                            )
-                                    )),
-                          );
-                         }
+                    SizedBox(
+                      height: 16,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 80,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          Icon(
-                            Icons.restaurant,
-                            color: Colors.white38,
-                          ),
-                          SizedBox(
-                            width: 16,
-                          ),
-                          MenuSections(title: "STARTERS"),
-                          MenuSections(title: "MEAT"),
-                          MenuSections(title: "VEGETARIAN"),
-                          MenuSections(title: "VEGAN"),
-                          MenuSections(title: "DESSERTS"),
-                          MenuSections(title: "DRINKS"),
-                        ],
+                    Text(
+                      "Most Popular Recipes",
+                      style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Container(
+                      height: 350,
+                      child: ListView.builder(
+                          itemCount: recipeList.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return RecipeCard(
+                              color: recipeList[index].color,
+                              imageUrl: recipeList[index].imageUrl.toString(),
+                              scale: recipeList[index].scale,
+                              time: recipeList[index].time,
+                              reviews: recipeList[index].reviews,
+                              recipeTitle: recipeList[index].title.toString(),
+                              onTap: () =>
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              RecipeDetailPage(
+                                                  index: index,
+                                              )
+                                      )),
+                            );
+                           }
                       ),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 80,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            Icon(
+                              Icons.restaurant,
+                              color: Colors.white38,
+                            ),
+                            SizedBox(
+                              width: 16,
+                            ),
+                            MenuSections(title: "STARTERS"),
+                            MenuSections(title: "MEAT"),
+                            MenuSections(title: "VEGETARIAN"),
+                            MenuSections(title: "VEGAN"),
+                            MenuSections(title: "DESSERTS"),
+                            MenuSections(title: "DRINKS"),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          iconSize: 32,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Color.fromRGBO(47, 90, 112, 1.0),
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home_outlined,
+                color: Colors.white38,
+              ),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.favorite_border,
+                color: Colors.white38,
+              ),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.search_outlined,
+                color: Colors.white38,
+              ),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person_outline,
+                color: Colors.white38,
+              ),
+              label: '',
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        iconSize: 32,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Color.fromRGBO(47, 90, 112, 1.0),
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              color: Colors.white38,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.favorite_border,
-              color: Colors.white38,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search_outlined,
-              color: Colors.white38,
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_outline,
-              color: Colors.white38,
-            ),
-            label: '',
-          ),
-        ],
       ),
     );
   }
