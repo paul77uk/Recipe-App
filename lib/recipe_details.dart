@@ -26,8 +26,14 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
         body: SafeArea(
           child: Column(
             children: [
-              RecipeCard(index: widget.index),
-              Ingredients(),
+              CustomAppBar(index: widget.index),
+              Expanded(
+                child: ListView(
+                  children: [ RecipeCard(index: widget.index),
+                    Ingredients(),],
+                ),
+              )
+
             ],
           ),
         ),
@@ -47,7 +53,7 @@ class RecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450,
+      height: 400,
       decoration: BoxDecoration(
           color: recipeList[index].color,
           borderRadius: BorderRadius.only(
@@ -55,7 +61,6 @@ class RecipeCard extends StatelessWidget {
               bottomRight: Radius.circular(50))),
       child: Column(
         children: [
-          CustomAppBar(),
           Expanded(
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -190,10 +195,10 @@ class RecipeCard extends StatelessWidget {
                   child: ClipOval(
                     child: Image.network(
                       recipeList[index].imageUrl,
-                      width: index == 0 ? 275 : 270,
+                      width: 315,
                       height: 300,
                       fit: BoxFit.none,
-                      scale: index == 0 ? 3.5 : 2.06,
+                      scale: index == 0 ? 3 : 1.78,
                     ),
                   ),
                 ),
@@ -207,13 +212,16 @@ class RecipeCard extends StatelessWidget {
 }
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({Key? key}) : super(key: key);
+  const CustomAppBar({Key? key, required this.index}) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(22.0),
-      child: Container(
+    return Container(
+      color: recipeList[index].color,
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -309,16 +317,13 @@ class IngredientsText extends StatelessWidget {
           style: TextStyle(
               color: Color(0xFFC9B63D),
               fontWeight: FontWeight.bold,
-              fontSize: 28),
+              fontSize: 14),
         ),
         SizedBox(width: 5),
         Flexible(
-          child: Padding(
-            padding: const EdgeInsets.only(top:8.0),
-            child: Text(
-              text,
-              style: TextStyle(color: Colors.grey[600]),
-            ),
+          child: Text(
+            text,
+            style: TextStyle(color: Colors.grey[500], fontSize: 14),
           ),
         )
       ],

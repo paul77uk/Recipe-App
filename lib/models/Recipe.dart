@@ -4,8 +4,8 @@ class Recipe {
   String imageUrl;
   String title;
   int time;
-  int? servings;
-  double? rating;
+  int servings;
+  double rating;
   int reviews;
   Color color;
   double scale;
@@ -13,8 +13,8 @@ class Recipe {
   Recipe({
     required this.title,
     required this.time,
-    this.servings,
-    this.rating,
+    required this.servings,
+    required this.rating,
     required this.reviews,
     required this.imageUrl,
     required this.color,
